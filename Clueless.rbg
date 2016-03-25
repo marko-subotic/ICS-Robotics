@@ -6,6 +6,50 @@
     </Parameters>
 </ProgrammingBlock>
 
+<ProgrammingBlock type="loop" loopType="RepeatForever"/>
+
+<ProgrammingBlock type="loop" loopType="IfThen">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">getGyroDegrees(Gyrosensor)</Parameter>
+        <Parameter name="operator" type="typedef">&lt;</Parameter>
+        <Parameter name="RHS" type="long">90</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="setMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" typeDef="tMotor">leftMotor</Parameter>
+        <Parameter name="speed" type="short">-1000</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="setMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" typeDef="tMotor">rightMotor</Parameter>
+        <Parameter name="speed" type="short">-1000</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="else"/>
+
+<ProgrammingBlock type="functionCall" function="setMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" typeDef="tMotor">leftMotor</Parameter>
+        <Parameter name="speed" type="short">0</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="setMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" typeDef="tMotor">rightMotor</Parameter>
+        <Parameter name="speed" type="short">0</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="end"/>
+
 <ProgrammingBlock type="functionCall" function="resetTimer">
     <Parameters>
         <Parameter name="currentTimer" type="base typedef" typeDef="TTimers">T1</Parameter>
@@ -21,9 +65,9 @@
     </Parameters>
 </ProgrammingBlock>
 
-<ProgrammingBlock type="loop" commented="1" loopType="RepeatForever"/>
+<ProgrammingBlock type="loop" loopType="RepeatForever"/>
 
-<ProgrammingBlock type="loop" commented="1" loopType="RepeatUntil">
+<ProgrammingBlock type="loop" loopType="RepeatUntil">
     <Parameters>
         <Parameter name="LHS" type="typedef">getTimer(T1, seconds)</Parameter>
         <Parameter name="operator" type="typedef">==</Parameter>
@@ -31,50 +75,50 @@
     </Parameters>
 </ProgrammingBlock>
 
-<ProgrammingBlock type="functionCall" commented="1" function="setMotor">
+<ProgrammingBlock type="functionCall" function="setMotor">
     <Parameters>
         <Parameter name="motorPort" type="base typedef" typeDef="tMotor">flyWheel1</Parameter>
-        <Parameter name="speed" type="short">100</Parameter>
+        <Parameter name="speed" type="short">50</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
-<ProgrammingBlock type="functionCall" commented="1" function="setMotor">
+<ProgrammingBlock type="functionCall" function="setMotor">
     <Parameters>
         <Parameter name="motorPort" type="base typedef" typeDef="tMotor">flyWheel2</Parameter>
         <Parameter name="speed" type="short">-100</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
-<ProgrammingBlock type="end" commented="1"/>
+<ProgrammingBlock type="end"/>
 
-<ProgrammingBlock type="functionCall" commented="1" function="setMotor">
+<ProgrammingBlock type="functionCall" function="setMotor">
     <Parameters>
         <Parameter name="motorPort" type="base typedef" typeDef="tMotor">combineMotor</Parameter>
         <Parameter name="speed" type="short">-100</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
-<ProgrammingBlock type="end" commented="1"/>
+<ProgrammingBlock type="end"/>
 
 <ProgrammingBlock type="loop" loopType="RepeatUntil">
     <Parameters>
         <Parameter name="LHS" type="typedef">getGyroDegrees(Gyrosensor)</Parameter>
         <Parameter name="operator" type="typedef">&gt;=</Parameter>
-        <Parameter name="RHS" type="long">90</Parameter>
+        <Parameter name="RHS" type="float">90</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
 <ProgrammingBlock type="functionCall" function="setMotor">
     <Parameters>
         <Parameter name="motorPort" type="base typedef" typeDef="tMotor">leftMotor</Parameter>
-        <Parameter name="speed" type="short">50</Parameter>
+        <Parameter name="speed" type="short">0</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
 <ProgrammingBlock type="functionCall" function="setMotor">
     <Parameters>
         <Parameter name="motorPort" type="base typedef" typeDef="tMotor">rightMotor</Parameter>
-        <Parameter name="speed" type="short">50</Parameter>
+        <Parameter name="speed" type="short">0</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
@@ -82,10 +126,10 @@
 
 <ProgrammingBlock type="functionCall" function="stopAllMotors"/>
 
-<RobotConfiguration>#pragma config(Sensor, port2,  touchLED,       sensorVexIQ_LED)
-#pragma config(Sensor, port3,  colorDetector,  sensorVexIQ_ColorHue)
-#pragma config(Sensor, port7,  distanceMM,     sensorVexIQ_Distance)
-#pragma config(Sensor, port8,  bumpSwitch,     sensorVexIQ_Touch)
+<RobotConfiguration>#pragma config(Sensor, port2,  touchLED,       sensorNone)
+#pragma config(Sensor, port3,  colorDetector,  sensorNone)
+#pragma config(Sensor, port7,  distanceMM,     sensorNone)
+#pragma config(Sensor, port8,  bumpSwitch,     sensorNone)
 #pragma config(Sensor, port12, Gyrosensor,     sensorVexIQ_Gyro)
 #pragma config(Motor,  motor1,          leftMotor,     tmotorVexIQ, openLoop, driveLeft, encoder)
 #pragma config(Motor,  motor4,          flyWheel1,     tmotorVexIQ, PIDControl, encoder)
@@ -96,10 +140,10 @@
 //*!!Code automatically generated by 'ROBOTC' configuration wizard               !!*//
 </RobotConfiguration>
 
-<CSource>#pragma config(Sensor, port2,  touchLED,       sensorVexIQ_LED)
-#pragma config(Sensor, port3,  colorDetector,  sensorVexIQ_ColorHue)
-#pragma config(Sensor, port7,  distanceMM,     sensorVexIQ_Distance)
-#pragma config(Sensor, port8,  bumpSwitch,     sensorVexIQ_Touch)
+<CSource>#pragma config(Sensor, port2,  touchLED,       sensorNone)
+#pragma config(Sensor, port3,  colorDetector,  sensorNone)
+#pragma config(Sensor, port7,  distanceMM,     sensorNone)
+#pragma config(Sensor, port8,  bumpSwitch,     sensorNone)
 #pragma config(Sensor, port12, Gyrosensor,     sensorVexIQ_Gyro)
 #pragma config(Motor,  motor1,          leftMotor,     tmotorVexIQ, openLoop, driveLeft, encoder)
 #pragma config(Motor,  motor4,          flyWheel1,     tmotorVexIQ, PIDControl, encoder)
@@ -113,18 +157,27 @@
 task main()
 {
 	resetGyro(port12);
+	repeat (forever) {
+		if (getGyroDegrees(Gyrosensor) &lt; 90) {
+			setMotor(leftMotor, -1000);
+			setMotor(rightMotor, -1000);
+		} else {
+			setMotor(leftMotor, 0);
+			setMotor(rightMotor, 0);
+		}
+	}
 	resetTimer(T1);
 	moveMotor(clawMotor, 1.5, rotations, -100);
-	//repeat (forever) {
-		//repeatUntil (getTimer(T1, seconds) == 4) {
-			//setMotor(flyWheel1, 100);
-			//setMotor(flyWheel2, -100);
-		//}
-		//setMotor(combineMotor, -100);
-	//}
+	repeat (forever) {
+		repeatUntil (getTimer(T1, seconds) == 4) {
+			setMotor(flyWheel1, 50);
+			setMotor(flyWheel2, -100);
+		}
+		setMotor(combineMotor, -100);
+	}
 	repeatUntil (getGyroDegrees(Gyrosensor) &gt;= 90) {
-		setMotor(leftMotor, 50);
-		setMotor(rightMotor, 50);
+		setMotor(leftMotor, 0);
+		setMotor(rightMotor, 0);
 	}
 	stopAllMotors();
 }
