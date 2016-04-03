@@ -1,11 +1,5 @@
 <Version>1.0.1</Version>
 
-<ProgrammingBlock type="functionCall" function="resetGyro">
-    <Parameters>
-        <Parameter name="nDeviceIndex" type="base typedef" typeDef="tSensors">port12</Parameter>
-    </Parameters>
-</ProgrammingBlock>
-
 <ProgrammingBlock type="functionCall" function="moveMotor">
     <Parameters>
         <Parameter name="motorPort" type="base typedef" typeDef="tMotor">clawMotor</Parameter>
@@ -15,11 +9,19 @@
     </Parameters>
 </ProgrammingBlock>
 
+<ProgrammingBlock type="comment">turns 90 degrees</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="resetGyro">
+    <Parameters>
+        <Parameter name="nDeviceIndex" type="base typedef" typeDef="tSensors">port12</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
 <ProgrammingBlock type="loop" loopType="RepeatUntil">
     <Parameters>
         <Parameter name="LHS" type="typedef">getGyroDegrees(Gyrosensor)</Parameter>
         <Parameter name="operator" type="typedef">==</Parameter>
-        <Parameter name="RHS" type="long">80</Parameter>
+        <Parameter name="RHS" type="float">80</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
@@ -39,30 +41,34 @@
 
 <ProgrammingBlock type="end"/>
 
+<ProgrammingBlock type="comment">fine adjustment so robot doesn't hit wall hard</ProgrammingBlock>
+
 <ProgrammingBlock type="loop" loopType="RepeatUntil">
     <Parameters>
         <Parameter name="LHS" type="typedef">getGyroDegrees(Gyrosensor)</Parameter>
         <Parameter name="operator" type="typedef">==</Parameter>
-        <Parameter name="RHS" type="long">93</Parameter>
+        <Parameter name="RHS" type="float">93</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
 <ProgrammingBlock type="functionCall" function="setMotor">
     <Parameters>
         <Parameter name="motorPort" type="base typedef" typeDef="tMotor">leftMotor</Parameter>
-        <Parameter name="speed" type="short">-10</Parameter>
+        <Parameter name="speed" type="short">-50</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
 <ProgrammingBlock type="functionCall" function="setMotor">
     <Parameters>
         <Parameter name="motorPort" type="base typedef" typeDef="tMotor">rightMotor</Parameter>
-        <Parameter name="speed" type="short">-10</Parameter>
+        <Parameter name="speed" type="short">-50</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
 <ProgrammingBlock type="end"/>
 
+<ProgrammingBlock type="comment">stops turning</ProgrammingBlock>
+
 <ProgrammingBlock type="functionCall" function="setMotor">
     <Parameters>
         <Parameter name="motorPort" type="base typedef" typeDef="tMotor">leftMotor</Parameter>
@@ -76,6 +82,8 @@
         <Parameter name="speed" type="short">0</Parameter>
     </Parameters>
 </ProgrammingBlock>
+
+<ProgrammingBlock type="comment" commented="1">Puts down the claw</ProgrammingBlock>
 
 <ProgrammingBlock type="functionCall" function="moveMotor">
     <Parameters>
@@ -83,6 +91,54 @@
         <Parameter name="quantity" type="float">1.5</Parameter>
         <Parameter name="unitType" type="base typedef" typeDef="tMovementUnits">rotations</Parameter>
         <Parameter name="speed" type="short">100</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="comment">picks up one side of balls by driving forward</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="resetTimer">
+    <Parameters>
+        <Parameter name="currentTimer" type="base typedef" typeDef="TTimers">T1</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="loop" loopType="RepeatUntil">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">getTimer(T1, seconds)</Parameter>
+        <Parameter name="operator" type="typedef">&gt;=</Parameter>
+        <Parameter name="RHS" type="float">2</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="setMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" typeDef="tMotor">leftMotor</Parameter>
+        <Parameter name="speed" type="short">100</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="setMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" typeDef="tMotor">rightMotor</Parameter>
+        <Parameter name="speed" type="short">-100</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="comment">stops going forward</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="setMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" typeDef="tMotor">rightMotor</Parameter>
+        <Parameter name="speed" type="short">0</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="setMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" typeDef="tMotor">leftMotor</Parameter>
+        <Parameter name="speed" type="short">0</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
@@ -95,22 +151,22 @@
 <ProgrammingBlock type="loop" loopType="RepeatUntil">
     <Parameters>
         <Parameter name="LHS" type="typedef">getTimer(T1, seconds)</Parameter>
-        <Parameter name="operator" type="typedef">&gt;=</Parameter>
-        <Parameter name="RHS" type="long">2</Parameter>
+        <Parameter name="operator" type="typedef">==</Parameter>
+        <Parameter name="RHS" type="long">3</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
 <ProgrammingBlock type="functionCall" function="setMotor">
     <Parameters>
         <Parameter name="motorPort" type="base typedef" typeDef="tMotor">leftMotor</Parameter>
-        <Parameter name="speed" type="short">100</Parameter>
+        <Parameter name="speed" type="short">-100</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
 <ProgrammingBlock type="functionCall" function="setMotor">
     <Parameters>
         <Parameter name="motorPort" type="base typedef" typeDef="tMotor">rightMotor</Parameter>
-        <Parameter name="speed" type="short">-100</Parameter>
+        <Parameter name="speed" type="short">100</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
@@ -140,9 +196,9 @@
     </Parameters>
 </ProgrammingBlock>
 
-<ProgrammingBlock type="loop" commented="1" loopType="RepeatForever"/>
+<ProgrammingBlock type="loop" loopType="RepeatForever"/>
 
-<ProgrammingBlock type="loop" commented="1" loopType="RepeatUntil">
+<ProgrammingBlock type="loop" loopType="RepeatUntil">
     <Parameters>
         <Parameter name="LHS" type="typedef">getTimer(T1, seconds)</Parameter>
         <Parameter name="operator" type="typedef">==</Parameter>
@@ -150,30 +206,30 @@
     </Parameters>
 </ProgrammingBlock>
 
-<ProgrammingBlock type="functionCall" commented="1" function="setMotor">
+<ProgrammingBlock type="functionCall" function="setMotor">
     <Parameters>
         <Parameter name="motorPort" type="base typedef" typeDef="tMotor">flyWheel1</Parameter>
         <Parameter name="speed" type="short">50</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
-<ProgrammingBlock type="functionCall" commented="1" function="setMotor">
+<ProgrammingBlock type="functionCall" function="setMotor">
     <Parameters>
         <Parameter name="motorPort" type="base typedef" typeDef="tMotor">flyWheel2</Parameter>
         <Parameter name="speed" type="short">-100</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
-<ProgrammingBlock type="end" commented="1"/>
+<ProgrammingBlock type="end"/>
 
-<ProgrammingBlock type="functionCall" commented="1" function="setMotor">
+<ProgrammingBlock type="functionCall" function="setMotor">
     <Parameters>
         <Parameter name="motorPort" type="base typedef" typeDef="tMotor">combineMotor</Parameter>
         <Parameter name="speed" type="short">-100</Parameter>
     </Parameters>
 </ProgrammingBlock>
 
-<ProgrammingBlock type="functionCall" commented="1" function="forward">
+<ProgrammingBlock type="functionCall" function="forward">
     <Parameters>
         <Parameter name="quantity" type="float">1</Parameter>
         <Parameter name="unitType" type="base typedef" typeDef="tMovementUnits">rotations</Parameter>
@@ -181,9 +237,11 @@
     </Parameters>
 </ProgrammingBlock>
 
-<ProgrammingBlock type="loop" commented="1" loopType="RepeatForever"/>
+<ProgrammingBlock type="loop" loopType="RepeatForever"/>
 
-<ProgrammingBlock type="end" commented="1"/>
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="end"/>
 
 <RobotConfiguration>#pragma config(Sensor, port2,  touchLED,       sensorNone)
 #pragma config(Sensor, port3,  colorDetector,  sensorNone)
@@ -215,37 +273,51 @@
 
 task main()
 {
-	resetGyro(port12);
 	moveMotor(clawMotor, 1.5, rotations, -100);
+	// turns 90 degrees
+	resetGyro(port12);
 	repeatUntil (getGyroDegrees(Gyrosensor) == 80) {
 		setMotor(leftMotor, -100);
 		setMotor(rightMotor, -100);
 	}
+	// fine adjustment so robot doesn't hit wall hard
 	repeatUntil (getGyroDegrees(Gyrosensor) == 93) {
-		setMotor(leftMotor, -10);
-		setMotor(rightMotor, -10);
+		setMotor(leftMotor, -50);
+		setMotor(rightMotor, -50);
 	}
+	// stops turning
 	setMotor(leftMotor, 0);
 	setMotor(rightMotor, 0);
+	//// Puts down the claw
 	moveMotor(clawMotor, 1.5, rotations, 100);
+	// picks up one side of balls by driving forward
 	resetTimer(T1);
 	repeatUntil (getTimer(T1, seconds) &gt;= 2) {
 		setMotor(leftMotor, 100);
 		setMotor(rightMotor, -100);
+	}
+	// stops going forward
+	setMotor(rightMotor, 0);
+	setMotor(leftMotor, 0);
+	resetTimer(T1);
+	repeatUntil (getTimer(T1, seconds) == 3) {
+		setMotor(leftMotor, -100);
+		setMotor(rightMotor, 100);
 	}
 	setMotor(leftMotor, 0);
 	setMotor(rightMotor, 0);
 	repeat (forever) {
 	}
 	resetTimer(T1);
-	//repeat (forever) {
-		//repeatUntil (getTimer(T1, seconds) == 4) {
-			//setMotor(flyWheel1, 50);
-			//setMotor(flyWheel2, -100);
-		//}
-		//setMotor(combineMotor, -100);
-		//forward(1, rotations, 50);
-		//repeat (forever) {
-		//}
+	repeat (forever) {
+		repeatUntil (getTimer(T1, seconds) == 4) {
+			setMotor(flyWheel1, 50);
+			setMotor(flyWheel2, -100);
+		}
+		setMotor(combineMotor, -100);
+		forward(1, rotations, 50);
+		repeat (forever) {
+		}
+	}
 }
 </CSource>
